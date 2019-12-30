@@ -1,0 +1,60 @@
+name: Build And Deploy
+
+on: 
+  push:
+    branches: 
+      - master
+
+env:
+  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
+  GITHUB_SHA: ${{ github.sha }}
+  GKE_ZONE: us-west1-a
+  GKE_CLUSTER: example-gke-cluster
+  IMAGE: gke-test
+
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose
+    - name: Setup gcloud CLI
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: "270.0.0"
+        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_key: ${{ secrets.GKE_KEY }}
+    - name: Configure docker to use the gcloud command-line tool as a credential helper
+      run: |
+        # Set up docker to authenticate
+        # via gcloud command-line tool.
+        gcloud auth configure-docker
+    - name: Build the Docker image
+      run: |
+        docker build -t gcr.io/clavision/main:"$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" .
+    - name: Push the Docker image to Google Container Registry
+      run: docker push gcr.io/clavision/main:$GITHUB_SHA
+    - name: Cloud Run
+      uses: stefda/action-cloud-run@v1.0
+      with:
+        # Name of the docker image
+        image: "gcr.io/${{ secrets.GKE_PROJECT }}/main"
+        # Name of the service in Cloud Run
+        service: "main"
+        # GCP project
+        project: ${{ secrets.GKE_PROJECT }}
+        # GCP region
+        region: "us-central1"
+        # GCP service key with storage and run permissions
+        service key: ${{ secrets.GKE_KEY }}
+        
