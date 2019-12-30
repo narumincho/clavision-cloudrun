@@ -30,6 +30,7 @@ async fn response_examples(
         
         <body>
             Cloud Run で Rust のサーバーを起動できた! by ナルミンチョ
+            GitHub Actionでのデプロイがうまくいくか!?
         </body>
         
         </html>
