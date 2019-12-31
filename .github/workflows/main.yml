@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
+  GKE_PROJECT: clavision
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
   GKE_ZONE: us-west1-a
@@ -48,7 +48,7 @@ jobs:
       uses: stefda/action-cloud-run@v1.0
       with:
         # Name of the docker image
-        image: "gcr.io/${{ secrets.GKE_PROJECT }}/main"
+        image: "gcr.io/clavision/main:${{ github.sha }}"
         # Name of the service in Cloud Run
         service: "main"
         # GCP project
