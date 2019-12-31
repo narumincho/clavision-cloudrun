@@ -1,7 +1,7 @@
 FROM postgres:latest
 
-RUN ["ls", "-R"]
-COPY  . .
+COPY . .
+RUN ["ls", "-R", "build"]
 
 ENV PORT=443
 
