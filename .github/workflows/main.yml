@@ -52,7 +52,7 @@ jobs:
         # Name of the service in Cloud Run
         service: "main"
         # GCP project
-        project: ${{ secrets.GKE_PROJECT }}
+        project: clavision
         # GCP region
         region: "us-central1"
         # GCP service key with storage and run permissions
