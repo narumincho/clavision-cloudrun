@@ -1,8 +1,8 @@
 name: Build And Deploy
 
-on: 
+on:
   push:
-    branches: 
+    branches:
       - master
 
 env:
@@ -14,36 +14,38 @@ env:
   IMAGE: gke-test
   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Build
-      run: cargo build --verbose --release
-    - name: Run tests
-      run: cargo test --verbose
-    - name: Show Files
-      run: ls -R
-    - name: Setup gcloud CLI
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-      with:
-        version: "270.0.0"
-        service_account_email: ${{ secrets.GKE_EMAIL }}
-        service_account_key: ${{ secrets.GKE_KEY }}
-    - name: Configure docker to use the gcloud command-line tool as a credential helper
-      run: |
-        # Set up docker to authenticate
-        # via gcloud command-line tool.
-        gcloud auth configure-docker
-    - name: Build the Docker image
-      run: |
-        docker build -t gcr.io/clavision/main:"$GITHUB_SHA" \
-          --build-arg GITHUB_SHA="$GITHUB_SHA" \
-          --build-arg GITHUB_REF="$GITHUB_REF" .
-    - name: Push the Docker image to Google Container Registry
-      run: docker push gcr.io/clavision/main:$GITHUB_SHA
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.14"
+      - name: npm install
+        run: npm install
+      - name: Build
+        run: npx tsc
+      - name: Show Files
+        run: ls -R
+      - name: Setup gcloud CLI
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: "270.0.0"
+          service_account_email: ${{ secrets.GKE_EMAIL }}
+          service_account_key: ${{ secrets.GKE_KEY }}
+      - name: Configure docker to use the gcloud command-line tool as a credential helper
+        run: |
+          # Set up docker to authenticate
+          # via gcloud command-line tool.
+          gcloud auth configure-docker
+      - name: Build the Docker image
+        run: |
+          docker build -t gcr.io/clavision/main:"$GITHUB_SHA" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF" .
+      - name: Push the Docker image to Google Container Registry
+        run: docker push gcr.io/clavision/main:$GITHUB_SHA

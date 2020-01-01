@@ -1,9 +1,10 @@
 FROM postgres:latest
 
-COPY ./target/release/clavision-cloudrun .
-COPY init.sql var/lib/postgresql/data/
+COPY ./distribution ./distribution
+
+RUN curl -sL https://rpm.nodesource.com/setup_12.14 | bash -
 RUN ["ls", "-a"]
 
 ENV PORT=443
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-CMD ["./clavision-cloudrun"]
+CMD ["node ./distribution/index.js"]

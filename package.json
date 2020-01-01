@@ -1,0 +1,20 @@
+{
+  "name": "clavision-cloudrun",
+  "version": "1.0.0",
+  "description": "",
+  "main": "distribution/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narumincho/clavision-cloudrun.git"
+  },
+  "author": "narumincho <narumincho.starfy@gmail.com> (https://narumincho.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/narumincho/clavision-cloudrun/issues"
+  },
+  "homepage": "https://github.com/narumincho/clavision-cloudrun#readme",
+  "devDependencies": {
+    "@types/node": "^13.1.2",
+    "typescript": "^3.7.4"
+  }
+}
