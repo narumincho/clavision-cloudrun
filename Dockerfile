@@ -1,7 +1,9 @@
 FROM postgres:latest
 
 COPY . .
-RUN ["ls", "-R", "build"]
+RUN ["echo", "カレントディレクトリを表示する"]
+RUN ["pwd"]
+RUN ["ls", "-R"]
 
 ENV PORT=443
 
