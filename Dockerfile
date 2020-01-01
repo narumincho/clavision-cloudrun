@@ -1,6 +1,6 @@
 FROM postgres:latest
 
-COPY ./target/debug/clavision-cloudrun .
+COPY ./target/release/clavision-cloudrun .
 RUN ["ls", "-a"]
 
 ENV PORT=443
