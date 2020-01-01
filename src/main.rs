@@ -5,7 +5,7 @@ use std::env;
 type GenericError = Box<dyn std::error::Error + Send + Sync>;
 
 async fn response_examples(
-    request: hyper::Request<hyper::Body>,
+    _request: hyper::Request<hyper::Body>,
 ) -> Result<hyper::Response<hyper::Body>, hyper::http::Error> {
     hyper::Response::builder()
         .header(

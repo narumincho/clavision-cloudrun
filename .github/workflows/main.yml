@@ -26,6 +26,8 @@ jobs:
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Show Files
+      run: ls -R -a
     - name: Setup gcloud CLI
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
@@ -44,17 +46,20 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" .
     - name: Push the Docker image to Google Container Registry
       run: docker push gcr.io/clavision/main:$GITHUB_SHA
-    - name: Cloud Run
-      uses: stefda/action-cloud-run@v1.0
-      with:
-        # Name of the docker image
-        image: "gcr.io/clavision/main:${{ github.sha }}"
-        # Name of the service in Cloud Run
-        service: "main"
-        # GCP project
-        project: clavision
-        # GCP region
-        region: "us-central1"
-        # GCP service key with storage and run permissions
-        service key: ${{ secrets.GKE_KEY }}
+
+      # /home/runner/work/clavision-cloudrun/clavision-cloudrun
+
+    # - name: Cloud Run
+    #   uses: stefda/action-cloud-run@v1.0
+    #   with:
+    #     # Name of the docker image
+    #     image: "gcr.io/clavision/main:${{ github.sha }}"
+    #     # Name of the service in Cloud Run
+    #     service: "main"
+    #     # GCP project
+    #     project: clavision
+    #     # GCP region
+    #     region: "us-central1"
+    #     # GCP service key with storage and run permissions
+    #     service key: ${{ secrets.GKE_KEY }}
         
