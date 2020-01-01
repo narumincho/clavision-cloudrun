@@ -27,7 +27,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Show Files
-      run: ls -R -a
+      run: ls -R
     - name: Setup gcloud CLI
       uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
@@ -46,9 +46,6 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" .
     - name: Push the Docker image to Google Container Registry
       run: docker push gcr.io/clavision/main:$GITHUB_SHA
-
-      # /home/runner/work/clavision-cloudrun/clavision-cloudrun
-
     # - name: Cloud Run
     #   uses: stefda/action-cloud-run@v1.0
     #   with:

@@ -1,9 +1,8 @@
 FROM postgres:latest
 
-COPY . .
-RUN ["echo", "カレントディレクトリを表示する"]
-RUN ["pwd"]
+COPY ./target/debug/clavision-cloudrun .
+RUN ["ls -a"]
 
 ENV PORT=443
 
-CMD ["echo", "良かったのか?"]
+CMD ["./clavision-cloudrun"]
