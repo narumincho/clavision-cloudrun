@@ -7,4 +7,4 @@ RUN ["ls", "-a"]
 
 ENV PORT=443
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-CMD ["node ./distribution/index.js"]
+CMD ["node ./distribution/main.js"]

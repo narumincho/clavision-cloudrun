@@ -2,7 +2,7 @@
   "name": "clavision-cloudrun",
   "version": "1.0.0",
   "description": "",
-  "main": "distribution/index.js",
+  "main": "distribution/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/narumincho/clavision-cloudrun.git"
@@ -14,7 +14,11 @@
   },
   "homepage": "https://github.com/narumincho/clavision-cloudrun#readme",
   "devDependencies": {
+    "@types/express": "^4.17.2",
     "@types/node": "^13.1.2",
     "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
