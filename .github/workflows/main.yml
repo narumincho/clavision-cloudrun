@@ -41,6 +41,6 @@ jobs:
       - name: Configure docker to use the gcloud command-line tool as a credential helper
         run: gcloud auth configure-docker
       - name: Build the Docker image
-        run: docker build -t gcr.io/clavision/main:"$GITHUB_SHA"
+        run: docker build -t gcr.io/clavision/main:"$GITHUB_SHA" .
       - name: Push the Docker image to Google Container Registry
-        run: docker push gcr.io/clavision/main:$GITHUB_SHA .
+        run: docker push gcr.io/clavision/main:$GITHUB_SHA
