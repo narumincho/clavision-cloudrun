@@ -44,9 +44,6 @@ jobs:
           # via gcloud command-line tool.
           gcloud auth configure-docker
       - name: Build the Docker image
-        run: |
-          docker build -t gcr.io/clavision/main:"$GITHUB_SHA" \
-            --build-arg GITHUB_SHA="$GITHUB_SHA" \
-            --build-arg GITHUB_REF="$GITHUB_REF" .
+        run: docker build -t gcr.io/clavision/main:"$GITHUB_SHA"
       - name: Push the Docker image to Google Container Registry
         run: docker push gcr.io/clavision/main:$GITHUB_SHA
