@@ -39,11 +39,8 @@ jobs:
           service_account_email: ${{ secrets.GKE_EMAIL }}
           service_account_key: ${{ secrets.GKE_KEY }}
       - name: Configure docker to use the gcloud command-line tool as a credential helper
-        run: |
-          # Set up docker to authenticate
-          # via gcloud command-line tool.
-          gcloud auth configure-docker
+        run: gcloud auth configure-docker
       - name: Build the Docker image
         run: docker build -t gcr.io/clavision/main:"$GITHUB_SHA"
       - name: Push the Docker image to Google Container Registry
-        run: docker push gcr.io/clavision/main:$GITHUB_SHA
+        run: docker push gcr.io/clavision/main:$GITHUB_SHA .
