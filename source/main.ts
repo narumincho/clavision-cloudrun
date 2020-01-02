@@ -2,6 +2,9 @@ import * as express from "express";
 
 const app = express();
 
+const port = process.env.PORT;
+console.log(port);
+app.set("port", port ?? 3000);
 app.get("/", (request, response) => {
   response.contentType("text/html").send(`
   <!doctype html>
@@ -25,5 +28,3 @@ app.get("/", (request, response) => {
         
         </html>`);
 });
-
-app.listen(process.env.PORT ?? 3000);
