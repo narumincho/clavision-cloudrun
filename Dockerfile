@@ -1,4 +1,5 @@
-FROM postgres:latest
+FROM postgres:latest as postgres
+FROM node:12.14
 
 COPY ./distribution /distribution
 
