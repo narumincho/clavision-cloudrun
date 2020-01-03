@@ -7,7 +7,11 @@ const client = new pg.Client({
   user: "postgres",
   password: process.env.POSTGRES_PASSWORD
 });
-client.connect();
+client.connect().then(() => {
+  console.log("postgresへの接続に成功")
+}).catch(e => {
+  console.log("postgresへの接続に失敗", e)
+});
 
 const port = process.env.PORT;
 console.log(port);
